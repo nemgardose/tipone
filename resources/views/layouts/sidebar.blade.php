@@ -17,14 +17,14 @@
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('companies.index') }}">
           <i class="fas fa-building"></i>
           <span>Companies</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('employees.index') }}">
           <i class="fas fa-users"></i>
           <span>Employees</span>
         </a>
