@@ -11,7 +11,7 @@
             <form action="{{ route('companies.update', $company->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             {{ method_field('PUT') }}
-            <input type="hidden" vclass="form-control" value="" name="edit_company_id" id="edit_company_id">
+            <input type="hidden" class="form-control" value="" name="edit_company_id" id="edit_company_id">
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="text-center">

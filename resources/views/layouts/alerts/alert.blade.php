@@ -48,3 +48,32 @@
 </div>
 @enderror
 <!--End Here-->
+
+<!--Create Employee Error Message-->
+@error('first_name')
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ $message }}
+</div>
+@enderror
+
+@error('last_name')
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ $message }}
+</div>
+@enderror
+
+@error('phone')
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{ $message }}
+</div>
+@enderror
+
+@if(session('company'))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Heads Up! </strong> {{ session('info') }}
+    </div>
+@endif

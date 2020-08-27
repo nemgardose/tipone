@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Company;
+use App\Employee;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -13,7 +16,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('layouts.employees');
+        $companies = Company::paginate(10);
+        $employees = Employee::paginate(10);
+
+        return view('layouts.employees', compact('employees', 'companies'));
     }
 
     /**
@@ -34,7 +40,17 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'company_id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+        ]);
+
+        Employee::create($request->all());
+
+        return back()->with('success', 'Employee has been created!');
     }
 
     /**
@@ -54,9 +70,24 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $employee = DB::table('employees')
+        ->join('companies', 'employees.company_id', '=', 'companies.id')
+        ->where('employees.id', $request->employee_id)
+        ->get([
+            'companies.id',
+            'employees.id',
+            'companies.name',
+            'first_name',
+            'last_name',
+            'employees.email',
+            'phone'
+        ]);
+
+        if($request->ajax()) {
+            return response($employee);
+        }
     }
 
     /**
@@ -68,7 +99,23 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+        ]);
+
+        Employee::where('id', $request->edit_employee_id)
+        ->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'company_id'=> $request->company_id,
+        ]);
+
+        return back()->with('success', 'Employee has been successfully updated!');
     }
 
     /**
@@ -79,6 +126,9 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $employee = Employee::find($id);
+        $employee->delete();
+
+        return back()->with('success', 'Employee has been deleted!');
     }
 }

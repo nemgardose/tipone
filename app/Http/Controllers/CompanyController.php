@@ -50,7 +50,7 @@ class CompanyController extends Controller
         $company->website = $request->website;
         $company->save();
 
-        return back()->with('success', 'Company has been successfully created!');
+        return back()->with('success', 'Company has been created!');
     }
 
     /**
@@ -102,7 +102,7 @@ class CompanyController extends Controller
             'logo' => UploadImage::upload($request, 'logo')
         ]);
 
-        return back()->with('success', 'Company has been successfully updated!');
+        return back()->with('success', 'Company has been updated!');
     }
 
     /**
@@ -113,8 +113,6 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        // dd("tang ina naman");
-
         $company = Company::find($id);
         $company->delete();
 
